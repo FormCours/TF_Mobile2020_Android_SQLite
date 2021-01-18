@@ -12,10 +12,15 @@ public class RecipeIngredient implements Entity, Parcelable {
     private long ingredientId;
     private String quantity;
 
-    public RecipeIngredient(long recipeId, long ingredientId, String quantity) {
+    public RecipeIngredient(long recipeIngredientId, long recipeId, long ingredientId, String quantity) {
+        this.recipeIngredientId = recipeIngredientId;
         this.recipeId = recipeId;
         this.ingredientId = ingredientId;
         this.quantity = quantity;
+    }
+
+    public RecipeIngredient(long recipeId, long ingredientId, String quantity) {
+        this(0, recipeId, ingredientId, quantity);
     }
 
     protected RecipeIngredient(Parcel in) {
