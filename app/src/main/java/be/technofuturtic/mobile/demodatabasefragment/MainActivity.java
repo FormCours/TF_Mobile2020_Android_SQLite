@@ -9,20 +9,30 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import be.technofuturtic.mobile.demodatabasefragment.db.dao.IngredientDao;
 import be.technofuturtic.mobile.demodatabasefragment.db.dao.RecipeDao;
+import be.technofuturtic.mobile.demodatabasefragment.db.dao.RecipeIngredientDao;
+import be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeForm.NewRecipeModel;
 import be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeForm.RecipeFormFragment;
 import be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeList.RecipesFragment;
+import be.technofuturtic.mobile.demodatabasefragment.models.Ingredient;
 import be.technofuturtic.mobile.demodatabasefragment.models.Recipe;
+import be.technofuturtic.mobile.demodatabasefragment.models.RecipeIngredient;
 
 public class MainActivity extends AppCompatActivity
     implements View.OnClickListener, RecipeFormFragment.RecipeValidedListener {
 
     private Button btnNewRecipe;
     private RecipeDao recipeDao;
+    private IngredientDao ingredientDao;
+    private RecipeIngredientDao recipeIngredientDao;
     private ArrayList<Recipe> recipes;
 
     public MainActivity() {
         recipeDao = new RecipeDao(this);
+        ingredientDao = new IngredientDao(this);
+        recipeIngredientDao = new RecipeIngredientDao(this);
+
         recipes = new ArrayList<>();
     }
 
@@ -73,15 +83,40 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRecipeValidedListener(Recipe recipe) {
+    public void onRecipeValidedListener(NewRecipeModel newRecipe) {
 
-        // Ajouter dans la DB
+        // Mapping vers les models DB
+        Recipe recipe = new Recipe(newRecipe.getName(), newRecipe.getRating());
+
+        // Ajouter de la recipe dans la DB
         recipeDao.openWritable();
-        recipeDao.create(recipe);
+        long recipeId = recipeDao.create(recipe);
         recipeDao.close();
+
+        // Mise a jours de l'id de la recette
+        recipe.setId(recipeId);
 
         // Ajouter dans la liste
         recipes.add(recipe);
+
+        // Ajout des ingrédients
+        for (NewRecipeModel.Ingredient ingredient : newRecipe.getIngredients()) {
+            // Recup de l'id de l'ingrédient (ajout en db, si non existant)
+            ingredientDao.openWritable();
+            Long ingredientId = ingredientDao.getIdByName(ingredient.getName());
+            if(ingredientId == null) {
+                ingredientId = ingredientDao.create(new Ingredient(ingredient.getName(), ""));
+            }
+            ingredientDao.close();
+
+            // Ajout du lien entre la recette et l'ingrédient
+            RecipeIngredient link = new RecipeIngredient(
+                    recipeId, ingredientId, ingredient.getQuantity()
+            );
+            recipeIngredientDao.openWritable();
+            recipeIngredientDao.create(link);
+            recipeIngredientDao.close();
+        }
 
         // Ferme le fragement
         getSupportFragmentManager().popBackStack();

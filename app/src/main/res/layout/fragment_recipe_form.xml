@@ -3,43 +3,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RecipeForm.RecipeFormFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".fragments.RecipeForm.RecipeFormFragment">
 
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/label_name_recipe"
-        />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/et_frag_form_recipe_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_recipe_name"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/label_rating_recipe"
-        />
-
-    <EditText
-        android:id="@+id/et_frag_form_recipe_rating"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="@string/hint_recipe_rating"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/btn_frag_form_recipe_valided"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_add_recipe"
-        />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_recipe_name" />
+
+            <EditText
+                android:id="@+id/et_frag_form_recipe_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_recipe_name" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_recipe_rating" />
+
+            <EditText
+                android:id="@+id/et_frag_form_recipe_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_recipe_rating"
+                android:inputType="number" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_recipe_ingredients" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_frag_form_recipe_ingredient_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:hint="@string/hint_recipe_ingredient_name" />
+
+                <EditText
+                    android:id="@+id/et_frag_form_recipe_ingredient_quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="@string/hint_recipe_ingredient_quantity" />
+
+                <Button
+                    android:id="@+id/btn_frag_form_recipe_ingredient_add"
+                    android:layout_width="40sp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_add_ingredient" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_frag_from_recipe_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginHorizontal="10dp" />
+
+            <Button
+                android:id="@+id/btn_frag_form_recipe_valided"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_add_recipe" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

@@ -14,6 +14,19 @@ public class IngredientDao extends DaoBase<Ingredient> {
     }
 
 
+    public Long getIdByName(String name) {
+        Cursor c = db.query(getTableName(), null,
+                DbQuery.Ingredient.COL_NAME + " = ?", new String[]{name},
+                null, null, null);
+
+        if (c.getCount() == 1) {
+            c.moveToFirst();
+            return cursorToEntity(c).getId();
+        }
+        return null;
+    }
+
+
     @Override
     protected ContentValues entityToContentValues(Ingredient entity) {
         ContentValues cv = new ContentValues();

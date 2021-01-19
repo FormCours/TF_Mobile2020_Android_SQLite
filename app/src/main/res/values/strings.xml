@@ -2,9 +2,13 @@
     <string name="app_name">DemoDatabaseFragment</string>
     <string name="title_activity">App Recette</string>
     <string name="btn_new">New</string>
-    <string name="label_name_recipe">Name</string>
+    <string name="label_recipe_name">Name</string>
     <string name="btn_add_recipe">Add recipe</string>
     <string name="hint_recipe_name">Pizza</string>
-    <string name="label_rating_recipe">Rating</string>
-    <string name="hint_recipe_rating">2</string>
+    <string name="label_recipe_rating">Rating</string>
+    <string name="hint_recipe_rating">0 – 5</string>
+    <string name="label_recipe_ingredients">Ingredients</string>
+    <string name="hint_recipe_ingredient_name">Ingredient</string>
+    <string name="hint_recipe_ingredient_quantity">Quantity</string>
+    <string name="btn_add_ingredient">+</string>
 </resources>
