@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.frag_main_content, fragment)
                 .addToBackStack(null)
                 .commit();
+
+        btnNewRecipe.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -83,5 +85,6 @@ public class MainActivity extends AppCompatActivity
 
         // Ferme le fragement
         getSupportFragmentManager().popBackStack();
+        btnNewRecipe.setVisibility(View.VISIBLE);
     }
 }
