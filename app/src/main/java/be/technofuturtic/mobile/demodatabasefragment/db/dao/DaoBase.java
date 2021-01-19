@@ -105,7 +105,7 @@ public abstract class DaoBase<TEntity extends Entity> implements Dao<TEntity> {
         if (c.getCount() > 0) {
             c.moveToFirst();
 
-            while (c.isAfterLast()) {
+            while (!c.isAfterLast()) {
                 TEntity r = cursorToEntity(c);
                 recipes.add(r);
 
