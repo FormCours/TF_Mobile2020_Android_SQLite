@@ -6,19 +6,25 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import be.technofuturtic.mobile.demodatabasefragment.db.dao.RecipeDao;
-import be.technofuturtic.mobile.demodatabasefragment.fragments.RecipesFragment;
+import be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeForm.RecipeFormFragment;
+import be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeList.RecipesFragment;
 import be.technofuturtic.mobile.demodatabasefragment.models.Recipe;
 
 public class MainActivity extends AppCompatActivity
-    implements View.OnClickListener {
+    implements View.OnClickListener, RecipeFormFragment.RecipeValidedListener {
 
-    Button btnNewRecipe;
+    private Button btnNewRecipe;
+    private RecipeDao recipeDao;
+    private ArrayList<Recipe> recipes;
+
+    public MainActivity() {
+        recipeDao = new RecipeDao(this);
+        recipes = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +39,9 @@ public class MainActivity extends AppCompatActivity
 
     private void displayRecipes() {
 
-        RecipeDao recipeDao = new RecipeDao(getApplicationContext());
         recipeDao.openReadable();
-        ArrayList<Recipe> recipes = (ArrayList<Recipe>) recipeDao.getAll();
+        recipes = (ArrayList<Recipe>) recipeDao.getAll();
         recipeDao.close();
-
-        //FIXME Delete this !
-        recipes.add(new Recipe(13, "Hello", 3));
-        recipes.add(new Recipe(42, "test", 5));
-        recipes.add(new Recipe(52, "Bye", 1));
 
         Fragment recipesFragment = RecipesFragment.newInstance(recipes);
 
@@ -54,10 +54,34 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_main_new:
-                // TODO Faire l'ajout
+                openAddRecipeFragment();
                 break;
             default:
                 throw new RuntimeException(String.format("Click not support on %s", v.toString()));
         }
+    }
+
+    private void openAddRecipeFragment() {
+        RecipeFormFragment fragment = RecipeFormFragment.newInstance();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frag_main_content, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onRecipeValidedListener(Recipe recipe) {
+
+        // Ajouter dans la DB
+        recipeDao.openWritable();
+        recipeDao.create(recipe);
+        recipeDao.close();
+
+        // Ajouter dans la liste
+        recipes.add(recipe);
+
+        // Ferme le fragement
+        getSupportFragmentManager().popBackStack();
     }
 }

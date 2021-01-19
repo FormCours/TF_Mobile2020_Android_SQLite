@@ -20,6 +20,10 @@ public class Recipe implements Entity, Parcelable {
         this.rating = rating;
     }
 
+    public Recipe(String name, Integer rating) {
+        this(0, name, rating);
+    }
+
     public Recipe(String name) {
         this(0, name, null);
     }

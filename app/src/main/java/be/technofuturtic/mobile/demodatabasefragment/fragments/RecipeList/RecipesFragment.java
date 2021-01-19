@@ -1,4 +1,4 @@
-package be.technofuturtic.mobile.demodatabasefragment.fragments;
+package be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeList;
 
 import android.content.Context;
 import android.os.Bundle;
