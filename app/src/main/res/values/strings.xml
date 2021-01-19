@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DemoDatabaseFragment</string>
+    <string name="title_activity">App Recette</string>
+    <string name="btn_new">Nouveau</string>
 </resources>
