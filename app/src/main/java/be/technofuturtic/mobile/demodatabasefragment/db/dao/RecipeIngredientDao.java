@@ -16,7 +16,6 @@ public class RecipeIngredientDao extends DaoBase<RecipeIngredient> {
     @Override
     protected ContentValues entityToContentValues(RecipeIngredient entity) {
         ContentValues cv = new ContentValues();
-        cv.put(DbQuery.RecipeIngredient.COL_ID, entity.getId());
         cv.put(DbQuery.RecipeIngredient.COL_RECIPE_ID, entity.getRecipeId());
         cv.put(DbQuery.RecipeIngredient.COL_INGREDIENT_ID, entity.getIngredientId());
         cv.put(DbQuery.RecipeIngredient.COL_QUANTITY, entity.getQuantity());
