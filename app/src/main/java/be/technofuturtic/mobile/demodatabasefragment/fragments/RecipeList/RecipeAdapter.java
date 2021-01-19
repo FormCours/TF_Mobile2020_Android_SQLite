@@ -1,4 +1,4 @@
-package be.technofuturtic.mobile.demodatabasefragment.fragments;
+package be.technofuturtic.mobile.demodatabasefragment.fragments.RecipeList;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +33,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         Recipe recipe = recipes.get(position);
 
         holder.tvTitle.setText(recipe.getName());
-        holder.rbRating.setNumStars(recipe.getRating());
+
+        holder.rbRating.setNumStars(5);
+
+        int rating = recipe.getRating() != null ? recipe.getRating() : 0;
+        holder.rbRating.setRating(rating);
     }
 
     @Override
